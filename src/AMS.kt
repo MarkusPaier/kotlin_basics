@@ -48,6 +48,8 @@ fun feedTheFish() {
     if (shouldChangeWater(day)) {
         println("Change the water today")
     }
+
+    dirtyProcessor()
 }
 
 fun shouldChangeWater(
@@ -109,4 +111,25 @@ fun randomDay(): String {
 // set default value
 fun swim(speed: String = "fast") {
     println("swimming $speed")
+}
+
+// lambdas
+var dirty = 20
+
+val waterFilter: (Int) -> Int = { dirty -> dirty / 2}
+fun feedFish(dirty: Int) = dirty + 10
+
+fun updateDirty(dirty: Int, operation: (Int) -> Int): Int {
+    return operation(dirty)
+}
+
+fun dirtyProcessor() {
+    dirty = updateDirty(dirty, waterFilter)
+    dirty = updateDirty(dirty, ::feedFish)
+    dirty = updateDirty(dirty) {dirty ->
+        dirty + 50
+    }
+    dirty = updateDirty(dirty, {dirty ->
+        dirty + 50
+    })
 }
