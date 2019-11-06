@@ -16,6 +16,12 @@ fun main(args: Array<String>) {
         println("A fish is swimming")
     }
 
+    // lambdas
+    dirtyProcessor()
+
+    // filters
+    eagerExample()
+
     // kotlin if statements examples
     /*val temperature = 10
     val isHot = if (temperature > 50)
@@ -48,8 +54,6 @@ fun feedTheFish() {
     if (shouldChangeWater(day)) {
         println("Change the water today")
     }
-
-    dirtyProcessor()
 }
 
 fun shouldChangeWater(
@@ -132,4 +136,27 @@ fun dirtyProcessor() {
     dirty = updateDirty(dirty, {dirty ->
         dirty + 50
     })
+}
+
+// filters
+fun eagerExample() {
+    val decorations = listOf("rock","pagoda","plastic plant","alligator","flowerpot")
+
+    val eager = decorations.filter { it[0] == 'p' }
+    println(eager)
+
+    // apply filter lazily
+    val filtered = decorations.asSequence().filter { it[0] == 'p' }
+    println(filtered)
+    println(filtered.toList())
+
+    // apply map lazily
+    val lazyMap = decorations.asSequence().map {
+        println("map: $it")
+        it
+    }
+
+    println(lazyMap)
+    println("first: ${lazyMap.first()}")
+    println("all: ${lazyMap.toList()}")
 }
